@@ -436,8 +436,10 @@ function animateSprites(t) {
   const height = vh();
 
   sprites.forEach(s => {
-    const elWidth = s.el.width;
-    const elHeight = s.el.height;
+    const rect = s.el.getBoundingClientRect();
+const elWidth = rect.width;
+const elHeight = rect.height;
+
 
     s.x += s.vx * dt;
     s.y += s.vy * dt;
@@ -474,4 +476,5 @@ window.addEventListener('resize', () => {
 
 </body>
 </html>
+
 
