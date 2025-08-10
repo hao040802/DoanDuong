@@ -446,13 +446,8 @@ function animateSprites(t){
     // bounce on edges
     if (s.x < pad){ s.x = pad; s.vx *= -1; }
     if (s.y < pad){ s.y = pad; s.vy *= -1; }
-    let extraSpace = 50; // số px mở rộng ra ngoài
-if (s.x < -extraSpace || s.x > window.innerWidth - 80 + extraSpace) {
-  s.vx *= -1;
-}
-if (s.y < -extraSpace || s.y > window.innerHeight - 80 + extraSpace) {
-  s.vy *= -1;
-}
+    if (s.x > width - pad - 100){ s.x = width - pad - 100; s.vx *= -1; }
+    if (s.y > height - pad - 100){ s.y = height - pad - 100; s.vy *= -1; }
 
     // tiny random walk change
     if (Math.random() < 0.01) s.vx += (Math.random()-0.5)*0.4;
