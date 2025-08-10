@@ -1,207 +1,157 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Hộp Câu Hỏi Tình Cảm 💖 + Snoopy GIFs</title>
-<style>
-:root {
-  --snoopy-size: 100px;
-  --turquoise: #00bcd4;
-}
-body {
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(120deg, #fbc2eb, #a6c1ee);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  overflow: hidden;
-  position: relative;
-  color: #333;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hộp Câu Hỏi Tình Cảm 💖</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(120deg, #fbc2eb, #a6c1ee);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: #333;
+    }
 
-/* Tiêu đề */
-h1 {
-  font-size: 2.2rem;
-  margin-bottom: 1rem;
-  color: #6a0572;
-  text-align: center;
-  z-index: 3;
-}
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #6a0572;
+      text-align: center;
+    }
 
-/* Khung lá bài */
-.card-container {
-  perspective: 1200px;
-  z-index: 3;
-}
-.card {
-  width: 300px;
-  height: 420px;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 1s ease;
-  cursor: pointer;
-}
-.card.flip {
-  transform: rotateY(180deg);
-}
-.card-face {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.2);
-}
+    .card-container {
+      width: 250px;
+      height: 350px;
+      perspective: 1000px;
+    }
 
-/* Mặt sau lá bài */
-.card-back {
-  background: repeating-linear-gradient(45deg, var(--turquoise) 0, var(--turquoise) 10px, #b2ebf2 10px, #b2ebf2 20px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.4rem;
-  font-weight: bold;
-}
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 1s ease;
+    }
 
-/* Mặt trước lá bài */
-.card-front {
-  background: white;
-  border: 4px solid var(--turquoise);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 20px;
-  transform: rotateY(180deg);
-}
-.card-front h2 {
-  text-align: center;
-  font-size: 1.4rem;
-  margin-bottom: 1rem;
-  color: var(--turquoise);
-}
-.card-front p {
-  font-size: 1.1rem;
-  text-align: center;
-  line-height: 1.5;
-}
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      backface-visibility: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
 
-/* Nút */
-#controls {
-  margin-top: 14px;
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  z-index: 3;
-}
-#randomBtn, #resetSeenBtn {
-  padding: 10px 16px;
-  border: none;
-  border-radius: 999px;
-  background: linear-gradient(90deg,#ff7eb9,#ff5194);
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 6px 14px rgba(255,82,148,0.18);
-}
-#resetSeenBtn { background: linear-gradient(90deg,#76b0ff,#6bd3ff); }
+    .card-back {
+      background: repeating-linear-gradient(
+        45deg,
+        #00bcd4,
+        #00bcd4 10px,
+        #00acc1 10px,
+        #00acc1 20px
+      );
+    }
 
-/* Snoopy GIF */
-.snoopy {
-  position: absolute;
-  width: var(--snoopy-size);
-  height: auto;
-  z-index: 1;
-  opacity: 0.95;
-}
-.top-left { top: 12px; left: 12px; }
-.top-right { top: 12px; right: 12px; }
-.bottom-left { bottom: 12px; left: 12px; }
-.bottom-right { bottom: 12px; right: 12px; }
-.mid-left { top: 50%; left: 8px; transform: translateY(-50%); }
-.mid-right { top: 50%; right: 8px; transform: translateY(-50%); }
+    .card-front {
+      background: white;
+      border: 4px solid #00bcd4;
+      transform: rotateY(180deg);
+      font-size: 1.1rem;
+      color: #333;
+    }
 
-@media (max-width:600px){
-  :root { --snoopy-size: 72px; }
-  h1 { font-size: 1.6rem; }
-  .card { width: 240px; height: 340px; }
-}
-</style>
+    @keyframes shuffle {
+      0%,100% { transform: rotate(0deg); }
+      25% { transform: rotate(5deg); }
+      50% { transform: rotate(-5deg); }
+      75% { transform: rotate(3deg); }
+    }
+
+    #randomBtn {
+      margin-top: 1.5rem;
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 25px;
+      background-color: #00bcd4;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,188,212,0.3);
+      transition: background-color 0.3s ease;
+    }
+
+    #randomBtn:hover {
+      background-color: #0097a7;
+    }
+  </style>
 </head>
 <body>
-<h1>💖</h1>
-
-<!-- Lá bài -->
-<div class="card-container">
-  <div class="card" id="questionCard">
-    <div class="card-face card-back">💖 Rút một lá 💖</div>
-    <div class="card-face card-front">
-      <h2>Lá Câu Hỏi</h2>
-      <p id="questionText">Câu hỏi sẽ hiện ở đây...</p>
+  <h1>Hộp Câu Hỏi Tình Cảm 💖</h1>
+  <div class="card-container">
+    <div class="card" id="tarotCard">
+      <div class="card-face card-back"></div>
+      <div class="card-face card-front" id="questionBox">
+        Nhấn nút để rút câu hỏi!
+      </div>
     </div>
   </div>
-</div>
+  <button id="randomBtn">✨ Rút Câu Hỏi</button>
 
-<!-- Nút -->
-<div id="controls">
-  <button id="randomBtn">✨ Lấy Câu Hỏi</button>
-  <button id="resetSeenBtn">🔁 Reset</button>
-</div>
+  <script>
+    const questions = [
+      "Nếu được cùng nhau đi du lịch một nơi, bạn muốn đi đâu nhất?",
+      "Bạn thích mùa nào nhất và tại sao?",
+      "Điều gì khiến bạn cảm thấy an toàn khi ở bên người khác?",
+      "Khi buồn, bạn muốn người kia làm gì cho bạn?",
+      "Điều nhỏ nhặt nào ở tôi khiến bạn cảm thấy hạnh phúc?",
+      "Nếu chúng ta có một ngày cuối tuần chỉ có hai người, bạn muốn làm gì?",
+      "Bạn nghĩ chúng ta sẽ như thế nào sau 5 năm nữa?",
+      "Có điều gì bạn chưa từng nói với tôi nhưng luôn muốn nói?",
+      "Khoảnh khắc nào khiến bạn cảm thấy thực sự yêu tôi?",
+      "Món ăn nào khiến bạn nghĩ đến tôi?"
+    ];
 
-<!-- Snoopy GIF -->
-<img class="snoopy top-left"    src="images/snoopy 1.gif" alt="Snoopy TL">
-<img class="snoopy top-right"   src="images/snoopy 2.gif" alt="Snoopy TR">
-<img class="snoopy bottom-left" src="images/snoopy 3.gif" alt="Snoopy BL">
-<img class="snoopy bottom-right"src="images/snoopy 4.gif" alt="Snoopy BR">
-<img class="snoopy mid-left"    src="images/snoopy 5.gif" alt="Snoopy ML">
-<img class="snoopy mid-right"   src="images/snoopy 6.gif" alt="Snoopy MR">
+    let availableQuestions = [...questions];
+    const card = document.getElementById('tarotCard');
+    const box = document.getElementById('questionBox');
+    const btn = document.getElementById('randomBtn');
 
-<script>
-const questions = [
-  "Nếu được cùng nhau đi du lịch một nơi, bạn muốn đi đâu nhất?",
-  "Bạn thích mùa nào nhất và tại sao?",
-  "Điều gì khiến bạn cảm thấy an toàn khi ở bên người khác?",
-  "Khi buồn, bạn muốn người kia làm gì cho bạn?",
-  "Điều nhỏ nhặt nào ở tôi khiến bạn cảm thấy hạnh phúc?",
-  "Nếu chúng ta có một ngày cuối tuần chỉ có hai người, bạn muốn làm gì?",
-  "Bạn nghĩ chúng ta sẽ như thế nào sau 5 năm nữa?",
-  "Có điều gì bạn chưa từng nói với tôi nhưng luôn muốn nói?",
-  "Khoảnh khắc nào khiến bạn cảm thấy thực sự yêu tôi?",
-  "Món ăn nào khiến bạn nghĩ đến tôi?"
-];
+    btn.addEventListener('click', () => {
+      // Nếu hết câu hỏi thì reset
+      if (availableQuestions.length === 0) {
+        availableQuestions = [...questions];
+      }
 
-let availableQuestions = [...questions];
-const card = document.getElementById('questionCard');
-const questionText = document.getElementById('questionText');
-const btn = document.getElementById('randomBtn');
-const resetBtn = document.getElementById('resetSeenBtn');
+      // Lấy câu hỏi ngẫu nhiên và xóa khỏi danh sách
+      const idx = Math.floor(Math.random() * availableQuestions.length);
+      const newQuestion = availableQuestions.splice(idx, 1)[0];
 
-btn.addEventListener('click', () => {
-  if (availableQuestions.length === 0) {
-    availableQuestions = [...questions];
-  }
-  const idx = Math.floor(Math.random() * availableQuestions.length);
-  const q = availableQuestions.splice(idx, 1)[0];
-  questionText.textContent = q;
+      // Giai đoạn 1: trộn bài
+      card.style.animation = 'shuffle 1s ease-in-out 2';
+      
+      // Sau khi trộn xong -> úp bài
+      setTimeout(() => {
+        card.style.animation = '';
+        card.style.transform = 'rotateY(0deg)'; // úp lại
+      }, 2000);
 
-  // hiệu ứng flip
-  card.classList.remove('flip');
-  setTimeout(() => {
-    card.classList.add('flip');
-  }, 100);
-});
-
-resetBtn.addEventListener('click', () => {
-  availableQuestions = [...questions];
-  questionText.textContent = "Câu hỏi sẽ hiện ở đây...";
-  card.classList.remove('flip');
-});
-</script>
+      // Sau khi úp -> lật và hiện câu hỏi
+      setTimeout(() => {
+        box.textContent = newQuestion;
+        card.style.transform = 'rotateY(180deg)'; // lật để hiện
+      }, 3000);
+    });
+  </script>
 </body>
 </html>
