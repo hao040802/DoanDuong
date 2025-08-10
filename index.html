@@ -151,53 +151,10 @@
     resetBtn.addEventListener('click', () => {
       availableQuestions = [...questions];
       box.textContent = "Danh sách đã được reset — bấm Lấy Câu Hỏi để bắt đầu lại.";
-      // localStorage.removeItem('availableQuestions');
-    });
-
-    // ------------------------
-    // 3) Loader GIF: thử từng nguồn trong data-sources
-    // ------------------------
-    function trySourcesForImg(imgEl) {
-      const raw = imgEl.getAttribute('data-sources') || '';
-      if (!raw) { imgEl.classList.add('hidden'); return; }
-      const sources = raw.split(',').map(s => s.trim()).filter(Boolean);
-      let i = 0;
-
-      function tryNext() {
-        if (i >= sources.length) {
-          // không nguồn nào load được -> ẩn ảnh để tránh hiển thị ảnh lỗi
-          imgEl.classList.add('hidden');
-          return;
-        }
-        const src = sources[i++];
-        const tester = new Image();
-        tester.onload = () => {
-          imgEl.src = src;
-          imgEl.classList.remove('hidden');
-          // nếu muốn set alt/title tương ứng: imgEl.title = 'Snoopy';
-        };
-        tester.onerror = () => {
-          // thử nguồn tiếp theo
-          tryNext();
-        };
-        // bắt đầu thử
-        tester.src = src;
-      }
-
-      tryNext();
-    }
-
-    // Áp dụng cho tất cả .snoopy
-    document.querySelectorAll('.snoopy').forEach(el => {
-      // thêm 1 khoảng delay nhỏ để tránh cùng lúc request tất cả
-      setTimeout(() => trySourcesForImg(el), Math.floor(Math.random()*600));
-    });
-
-    // Gợi ý: nếu bạn muốn lưu GIF vào repo, tạo folder `images/` và đặt:
-    // images/snoopy1.gif, images/snoopy2.gif, ... images/snoopy6.gif
-    // Khi repo của bạn host trên GitHub Pages, đường dẫn relative này sẽ hoạt động tốt.
+    
   </script>
 </body>
 </html>
+
 
 
