@@ -149,24 +149,12 @@
   </div>
 
   <!-- Snoopy elements (đặt images/snoopy1.gif ... trong repo của bạn) -->
-  <img class="snoopy" id="snoopy1" src="images/snoopy 1.gif" alt="snoopy1">
-  <img class="snoopy" id="snoopy2" src="images/snoopy 2.gif" alt="snoopy2">
-  <img class="snoopy" id="snoopy3" src="images/snoopy 3.gif" alt="snoopy3">
-  <img class="snoopy" id="snoopy4" src="images/snoopy 4.gif" alt="snoopy4">
-  <img class="snoopy" id="snoopy6" src="images/snoopy 6.gif" alt="snoopy6">
-  <img class="snoopy" id="snoopy6" src="images/snoopy 7.gif" alt="snoopy7">
-  <img class="snoopy" id="snoopy3" src="images/snoopy 8.gif" alt="snoopy8">
-  <img class="snoopy" id="snoopy4" src="images/snoopy 9.gif" alt="snoopy9">
-  <img class="snoopy" id="snoopy6" src="images/snoopy 10.gif" alt="snoopy10">
-  <img class="snoopy" id="snoopy6" src="images/snoopy 11.gif" alt="snoopy11">
-  <img class="snoopy" id="snoopy3" src="images/snoopy 12.gif" alt="snoopy12">
-  <img class="snoopy" id="snoopy4" src="images/snoopy 13.gif" alt="snoopy13">
-  <img class="snoopy" id="snoopy6" src="images/snoopy 14.gif" alt="snoopy14">
-  <img class="snoopy" id="snoopy6" src="images/snoopy 15.gif" alt="snoopy15">
-  <img class="snoopy" id="snoopy4" src="images/snoopy 16.gif" alt="snoopy16">
-  <img class="snoopy" id="snoopy6" src="images/snoopy 17.gif" alt="snoopy17">
-  <img class="snoopy" id="snoopy6" src="images/snoopy 18.gif" alt="snoopy18">
-
+  <img class="snoopy" id="snoopy1" src="images/snoopy1.gif" alt="snoopy1">
+  <img class="snoopy" id="snoopy2" src="images/snoopy2.gif" alt="snoopy2">
+  <img class="snoopy" id="snoopy3" src="images/snoopy3.gif" alt="snoopy3">
+  <img class="snoopy" id="snoopy4" src="images/snoopy4.gif" alt="snoopy4">
+  <img class="snoopy" id="snoopy5" src="images/snoopy5.gif" alt="snoopy5">
+  <img class="snoopy" id="snoopy6" src="images/snoopy6.gif" alt="snoopy6">
 
 <script>
 /* =========================
@@ -422,13 +410,13 @@ const vh = () => Math.max(document.documentElement.clientHeight || 0, window.inn
 // create state for each snoopy
 const sprites = snoopys.map((el, i) => {
   // initial pos random inside viewport padded
-  const pad = 60;
+  const pad = 0;
   const x = Math.random()*(vw()-pad*2)+pad;
   const y = Math.random()*(vh()-pad*2)+pad;
   // velocity small random
   const vx = (Math.random()*0.6 + 0.2) * (Math.random()<0.5 ? -1 : 1);
   const vy = (Math.random()*0.6 + 0.2) * (Math.random()<0.5 ? -1 : 1);
-  el.style.transform = translate(${x}px, ${y}px);
+  el.style.transform = `translate(${x}px, ${y}px)`;
   return {el,x,y,vx,vy};
 });
 
@@ -457,7 +445,7 @@ function animateSprites(t){
     s.vx = Math.max(-1.2, Math.min(1.2, s.vx));
     s.vy = Math.max(-1.2, Math.min(1.2, s.vy));
 
-    s.el.style.transform = translate(${s.x}px, ${s.y}px);
+    s.el.style.transform = `translate(${s.x}px, ${s.y}px)`;
   });
   requestAnimationFrame(animateSprites);
 }
