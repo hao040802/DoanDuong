@@ -1,165 +1,166 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bốc Lá Bài Tình Cảm 💖</title>
-  <style>
-    :root {
-      --card-width: 260px;
-      --card-height: 380px;
-      --snoopy-size: 100px;
-    }
-    body {
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(120deg, #fbc2eb, #a6c1ee);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      overflow: hidden;
-      position: relative;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Bốc Lá Bài Tình Cảm 💖</title>
+<style>
+  :root{
+    --card-w: 300px;
+    --card-h: 420px;
+    --accent: #00bcd4;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    background: linear-gradient(120deg,#fbc2eb,#a6c1ee);
+    overflow:hidden;
+  }
+  h1{color:#6a0572;margin:10px 0 18px;text-align:center}
+  /* card area */
+  .card-container{
+    width:var(--card-w);
+    height:var(--card-h);
+    perspective:1200px;
+    position:relative;
+    z-index:3;
+  }
+  .card{
+    width:100%;
+    height:100%;
+    position:relative;
+    transform-style:preserve-3d;
+    transition: transform 900ms cubic-bezier(.2,.8,.2,1);
+    cursor:pointer;
+  }
+  .card.flipped{ transform: rotateY(180deg); }
+  .card-face{
+    position:absolute;
+    inset:0;
+    border-radius:14px;
+    backface-visibility:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:22px;
+    box-shadow:0 14px 30px rgba(0,0,0,0.15);
+    font-size:1.05rem;
+    text-align:center;
+    line-height:1.4;
+  }
+  .card-back{
+    background: linear-gradient(145deg,#00c3ff,#28f0ff);
+    border:4px solid rgba(0,120,138,0.9);
+    color:white;
+    font-weight:700;
+    transform: rotateY(0deg);
+  }
+  .card-front{
+    background: white;
+    border:4px solid var(--accent);
+    color:#123;
+    transform: rotateY(180deg);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .card-front .title{
+    color:var(--accent);
+    font-weight:700;
+    margin-bottom:10px;
+    font-size:1.1rem;
+  }
+  .card-front .text{
+    font-size:1rem;
+    padding:0 6px;
+  }
 
-    h1 {
-      font-size: 2rem;
-      color: #6a0572;
-      margin-bottom: 1rem;
-      z-index: 3;
-      text-align: center;
-    }
+  /* shuffle animation (small rocking) */
+  @keyframes rock {
+    0% { transform: translateY(0) rotate(0); }
+    25% { transform: translateY(-6px) rotate(3deg); }
+    50% { transform: translateY(0) rotate(-3deg); }
+    75% { transform: translateY(-4px) rotate(2deg); }
+    100% { transform: translateY(0) rotate(0); }
+  }
+  .shuffling { animation: rock 850ms ease-in-out 3; }
 
-    /* Card container */
-    .card-container {
-      width: var(--card-width);
-      height: var(--card-height);
-      perspective: 1000px;
-      z-index: 3;
-    }
+  /* button */
+  #drawBtn{
+    margin-top:16px;
+    padding:10px 18px;
+    border:0;
+    border-radius:22px;
+    background:linear-gradient(90deg,#ff7eb9,#ff5194);
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(255,82,148,0.18);
+    z-index:3;
+  }
+  #drawBtn:disabled{opacity:.6;cursor:default}
+  #resetBtn{
+    margin-left:10px;
+    padding:8px 12px;border-radius:18px;border:0;background:#00bcd4;color:#fff;font-weight:600;cursor:pointer;
+  }
 
-    .card {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 1s ease;
-      cursor: pointer;
-    }
+  /* Snoopy */
+  .snoopy{
+    position:absolute;
+    width:100px;
+    height:auto;
+    z-index:2;
+    pointer-events:none;
+    will-change:transform;
+    filter:drop-shadow(0 6px 8px rgba(0,0,0,0.15));
+  }
 
-    .card.shuffling {
-      animation: shuffle 0.8s ease-in-out;
-    }
-
-    @keyframes shuffle {
-      0%, 100% { transform: rotateY(0deg) rotateZ(0deg); }
-      25% { transform: rotateY(0deg) rotateZ(5deg); }
-      50% { transform: rotateY(0deg) rotateZ(-5deg); }
-      75% { transform: rotateY(0deg) rotateZ(3deg); }
-    }
-
-    .card.flipped {
-      transform: rotateY(180deg);
-    }
-
-    .card-face {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 12px;
-      backface-visibility: hidden;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-
-    .card-back {
-      background: linear-gradient(145deg, #00c3ff, #28f0ff);
-      border: 4px solid #028f9b;
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: white;
-    }
-
-    .card-front {
-      background: white;
-      border: 4px solid #028f9b;
-      transform: rotateY(180deg);
-      font-size: 1.1rem;
-      text-align: center;
-      color: #333;
-    }
-
-    /* Buttons */
-    #drawBtn {
-      margin-top: 1.2rem;
-      padding: 0.8rem 1.5rem;
-      border: none;
-      border-radius: 25px;
-      background-color: #ff7eb9;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      z-index: 3;
-    }
-    #drawBtn:hover {
-      background-color: #ff5194;
-    }
-
-    /* Snoopy images */
-    .snoopy {
-      position: absolute;
-      width: var(--snoopy-size);
-      height: auto;
-      z-index: 1;
-      opacity: 0.95;
-    }
-    .top-left { top: 12px; left: 12px; }
-    .top-right { top: 12px; right: 12px; }
-    .bottom-left { bottom: 12px; left: 12px; }
-    .bottom-right { bottom: 12px; right: 12px; }
-    .mid-left { top: 50%; left: 8px; transform: translateY(-50%); }
-    .mid-right { top: 50%; right: 8px; transform: translateY(-50%); }
-
-    @media (max-width: 600px) {
-      :root {
-        --card-width: 200px;
-        --card-height: 300px;
-        --snoopy-size: 70px;
-      }
-      h1 { font-size: 1.5rem; }
-    }
-  </style>
+  /* small screens */
+  @media (max-width:640px){
+    :root{ --card-w: 240px; --card-h: 340px; }
+    .snoopy{ width:72px; }
+  }
+</style>
 </head>
 <body>
 
   <h1>Bốc Lá Bài Tình Cảm 💖</h1>
 
-  <!-- Card -->
-  <div class="card-container">
+  <div class="card-container" aria-hidden="false">
     <div class="card" id="card">
-      <div class="card-face card-back">💙</div>
-      <div class="card-face card-front" id="cardQuestion">Nhấn để rút lá bài</div>
+      <div class="card-face card-back" id="cardBack">💙</div>
+
+      <div class="card-face card-front" id="cardFront">
+        <div class="title">Lá Câu Hỏi</div>
+        <div class="text" id="cardText">Nhấn "Rút Lá Bài" để khám phá một câu hỏi.</div>
+      </div>
     </div>
   </div>
 
-  <button id="drawBtn">✨ Rút Lá Bài</button>
+  <div style="display:flex;gap:8px;align-items:center;z-index:3">
+    <button id="drawBtn">✨ Rút Lá Bài</button>
+    <button id="resetBtn" title="Reset bộ bài">🔁 Reset</button>
+  </div>
 
-  <!-- Snoopy GIFs -->
-  <img class="snoopy top-left" src="images/snoopy 1.gif" alt="Snoopy">
-  <img class="snoopy top-right" src="images/snoopy 2.gif" alt="Snoopy">
-  <img class="snoopy bottom-left" src="images/snoopy 3.gif" alt="Snoopy">
-  <img class="snoopy bottom-right" src="images/snoopy 4.gif" alt="Snoopy">
-  <img class="snoopy mid-left" src="images/snoopy 5.gif" alt="Snoopy">
-  <img class="snoopy mid-right" src="images/snoopy 6.gif" alt="Snoopy">
+  <!-- Snoopy elements (đặt images/snoopy1.gif ... trong repo của bạn) -->
+  <img class="snoopy" id="snoopy1" src="images/snoopy 1.gif" alt="snoopy1">
+  <img class="snoopy" id="snoopy2" src="images/snoopy 2.gif" alt="snoopy2">
+  <img class="snoopy" id="snoopy3" src="images/snoopy 3.gif" alt="snoopy3">
+  <img class="snoopy" id="snoopy4" src="images/snoopy 4.gif" alt="snoopy4">
+  <img class="snoopy" id="snoopy5" src="images/snoopy 5.gif" alt="snoopy5">
+  <img class="snoopy" id="snoopy6" src="images/snoopy 6.gif" alt="snoopy6">
 
-  <script>
-    const questions = [
+<script>
+/* =========================
+   1) Mảng 200 câu hỏi (mảng duy nhất)
+   ========================= */
+const questions = [
   "Lần hẹn hò nào của chúng ta mà em/anh nhớ rõ nhất từng chi tiết?",
   "Có điều gì em/anh từng ngại nói nhưng sau này đã dám chia sẻ với đối phương?",
   "Nếu được quay lại một ngày bên nhau, em/anh sẽ chọn ngày nào?",
@@ -169,7 +170,7 @@
   "Có điều gì em/anh nghĩ đối phương chưa hiểu hết về mình?",
   "Khi thấy đối phương buồn, em/anh thường làm gì trước tiên?",
   "Em/anh cảm thấy an toàn nhất khi nào ở bên người yêu?",
-  "Có thói quen hoặc câu nói nào của đối phương mà em/anh thấy rất “riêng” và đặc biệt?",
+  "Có thói quen hoặc câu nói nào của đối phương mà em/anh thấy rất 'riêng' và đặc biệt?",
   "Món ăn nào khiến em/anh nhớ đến đối phương ngay lập tức?",
   "Bài hát hoặc giai điệu nào làm em/anh liên tưởng đến chúng ta?",
   "Có mùi hương nào em/anh nhớ về người yêu?",
@@ -177,14 +178,14 @@
   "Màu sắc nào em/anh thấy giống tính cách của người yêu?",
   "Nếu có 1 năm không phải lo tiền bạc, em/anh muốn cùng đối phương làm gì?",
   "Có hoạt động mới nào em/anh muốn hai đứa thử chung?",
-  "Nếu viết một “bucket list” cho tình yêu của chúng ta, em/anh sẽ ghi gì đầu tiên?",
+  "Nếu viết một 'bucket list' cho tình yêu của chúng ta, em/anh sẽ ghi gì đầu tiên?",
   "Em/anh muốn cùng người yêu trải qua lễ hội hoặc sự kiện nào nhất?",
   "Ngôi nhà trong mơ của em/anh sẽ như thế nào nếu hai đứa sống chung?",
   "Nếu phải miêu tả đối phương bằng 3 từ, em/anh sẽ chọn từ nào?",
   "Điều gì ở đối phương khiến em/anh muốn cố gắng mỗi ngày?",
   "Nếu viết một lá thư cho người yêu 10 năm sau, em/anh sẽ viết gì?",
   "Có điều gì em/anh chưa từng nói nhưng rất muốn đối phương biết?",
-  "Khi nghĩ đến “chúng ta”, em/anh thấy tương lai mình tươi đẹp ra sao?",
+  "Khi nghĩ đến 'chúng ta', em/anh thấy tương lai mình tươi đẹp ra sao?",
   "Món ăn nào khiến em/anh nhớ đến người yêu ngay lập tức?",
   "Bài hát hoặc giai điệu nào làm em/anh liên tưởng đến chúng ta?",
   "Mùi hương nào khiến em/anh nhớ về người yêu?",
@@ -219,7 +220,7 @@
   "Em/anh muốn học kỹ năng gì để cùng người yêu áp dụng?",
   "Có hoạt động nào em/anh nghĩ sẽ làm chúng ta gần nhau hơn?",
   "Nếu đặt mục tiêu cho tình yêu, mục tiêu đó là gì?",
-  "Em/anh muốn hai đứa có một “truyền thống” riêng không?",
+  "Em/anh muốn hai đứa có một 'truyền thống' riêng không?",
   "Em/anh muốn thay đổi cách hai đứa giải quyết mâu thuẫn như thế nào?",
   "Nếu chỉ còn 1 tháng ở bên nhau, em/anh muốn làm gì nhất?",
   "Em/anh mong người yêu hỗ trợ mình trong điều gì nhất?",
@@ -244,7 +245,7 @@
   "Có dấu hiệu nào giúp em/anh biết rằng mối quan hệ đang cần chăm sóc?",
   "Em/anh muốn hai đứa tránh kiểu tranh cãi nào nhất?",
   "Người yêu từng giúp em/anh nhận ra điều gì về bản thân?",
-  "Nếu có “luật vàng” trong tình yêu, em/anh sẽ đặt luật gì?",
+  "Nếu có 'luật vàng' trong tình yêu, em/anh sẽ đặt luật gì?",
   "Em/anh tưởng tượng 5 năm nữa chúng ta sẽ sống ở đâu?",
   "Ngôi nhà mơ ước của em/anh như thế nào?",
   "Em/anh muốn cùng người yêu nuôi con vật gì?",
@@ -255,7 +256,7 @@
   "Em/anh muốn chúng ta duy trì sở thích chung nào lâu dài?",
   "Nếu một ngày hai đứa cùng nghỉ hưu, em/anh muốn làm gì?",
   "Em/anh muốn kỷ niệm 10 năm yêu nhau như thế nào?",
-  "Có “ước mơ điên rồ” nào em/anh muốn thử cùng người yêu?",
+  "Có 'ước mơ điên rồ' nào em/anh muốn thử cùng người yêu?",
   "Em/anh nghĩ chúng ta sẽ già đi như thế nào?",
   "Có điều gì em/anh muốn học để chuẩn bị cho tương lai cùng nhau?",
   "Em/anh muốn dành kỳ nghỉ trăng mật ở đâu?",
@@ -327,39 +328,137 @@
   "Nếu sau này gặp lại kiếp sau, điều gì em/anh muốn vẫn giữ nguyên?"
 ];
 
-    ];
+/* =========================
+   2) Deck logic: shuffle và rút (không lặp cho đến khi hết)
+   ========================= */
+let deck = [];
+function resetDeck(){
+  deck = [...questions];
+  shuffle(deck);
+}
+function shuffle(array){
+  // Fisher-Yates
+  for(let i = array.length -1; i>0; i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+resetDeck();
 
-    let availableQuestions = [...questions];
-    const card = document.getElementById('card');
-    const cardQuestion = document.getElementById('cardQuestion');
-    const drawBtn = document.getElementById('drawBtn');
+/* UI refs */
+const card = document.getElementById('card');
+const cardText = document.getElementById('cardText');
+const drawBtn = document.getElementById('drawBtn');
+const resetBtn = document.getElementById('resetBtn');
 
-    drawBtn.addEventListener('click', () => {
-      // Trộn bài (rung)
-      card.classList.add('shuffling');
+/* draw flow: soft shuffle animation -> flip to show question -> enable button */
+let busy = false;
+drawBtn.addEventListener('click', () => {
+  if (busy) return;
+  busy = true;
+  drawBtn.disabled = true;
 
+  // 1) gentle shake to simulate shuffle
+  card.classList.add('shuffling');
+
+  // after shuffling animation
+  setTimeout(() => {
+    card.classList.remove('shuffling');
+
+    // ensure deck has cards
+    if (deck.length === 0) resetDeck();
+
+    // shuffle deck again before drawing for realism
+    shuffle(deck);
+
+    // pop one card (top of deck)
+    const q = deck.pop();
+
+    // show back (face-down), remove flipped if any
+    card.classList.remove('flipped');
+
+    // small pause so it feels like dealing
+    setTimeout(() => {
+      // set text, then flip
+      cardText.textContent = q;
+      card.classList.add('flipped');
+
+      // keep it visible for a while, then allow next draw
       setTimeout(() => {
-        card.classList.remove('shuffling');
-        // Úp bài
-        card.classList.remove('flipped');
+        busy = false;
+        drawBtn.disabled = false;
+      }, 1200);
+    }, 260);
+  }, 900);
+});
 
-        // Lấy câu hỏi ngẫu nhiên
-        if (availableQuestions.length === 0) {
-          availableQuestions = [...questions];
-        }
-        const idx = Math.floor(Math.random() * availableQuestions.length);
-        const q = availableQuestions.splice(idx, 1)[0];
+/* Reset deck button */
+resetBtn.addEventListener('click', () => {
+  resetDeck();
+  cardText.textContent = "Nhấn 'Rút Lá Bài' để khám phá một câu hỏi.";
+  card.classList.remove('flipped');
+});
 
-        // Lật ra câu hỏi
-        setTimeout(() => {
-          cardQuestion.textContent = q;
-          card.classList.add('flipped');
-        }, 600);
+/* =========================
+   3) Snoopy movement: simple soft wandering for each image
+   ========================= */
+const snoopys = Array.from(document.querySelectorAll('.snoopy'));
+const vw = () => Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+const vh = () => Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
 
-      }, 800);
-    });
-  </script>
+// create state for each snoopy
+const sprites = snoopys.map((el, i) => {
+  // initial pos random inside viewport padded
+  const pad = 60;
+  const x = Math.random()*(vw()-pad*2)+pad;
+  const y = Math.random()*(vh()-pad*2)+pad;
+  // velocity small random
+  const vx = (Math.random()*0.6 + 0.2) * (Math.random()<0.5 ? -1 : 1);
+  const vy = (Math.random()*0.6 + 0.2) * (Math.random()<0.5 ? -1 : 1);
+  el.style.transform = `translate(${x}px, ${y}px)`;
+  return {el,x,y,vx,vy};
+});
+
+let lastTime = performance.now();
+function animateSprites(t){
+  const dt = Math.min(40, t - lastTime) / 16; // normalize
+  lastTime = t;
+  const pad = 20;
+  const width = vw();
+  const height = vh();
+  sprites.forEach(s => {
+    s.x += s.vx * dt;
+    s.y += s.vy * dt;
+
+    // bounce on edges
+    if (s.x < pad){ s.x = pad; s.vx *= -1; }
+    if (s.y < pad){ s.y = pad; s.vy *= -1; }
+    if (s.x > width - pad - 100){ s.x = width - pad - 100; s.vx *= -1; }
+    if (s.y > height - pad - 100){ s.y = height - pad - 100; s.vy *= -1; }
+
+    // tiny random walk change
+    if (Math.random() < 0.01) s.vx += (Math.random()-0.5)*0.4;
+    if (Math.random() < 0.01) s.vy += (Math.random()-0.5)*0.4;
+
+    // limit speed
+    s.vx = Math.max(-1.2, Math.min(1.2, s.vx));
+    s.vy = Math.max(-1.2, Math.min(1.2, s.vy));
+
+    s.el.style.transform = `translate(${s.x}px, ${s.y}px)`;
+  });
+  requestAnimationFrame(animateSprites);
+}
+requestAnimationFrame(animateSprites);
+
+/* keep sprites in viewport on resize */
+window.addEventListener('resize', () => {
+  sprites.forEach(s => {
+    s.x = Math.min(s.x, vw() - 120);
+    s.y = Math.min(s.y, vh() - 120);
+  });
+});
+</script>
 
 </body>
 </html>
-
