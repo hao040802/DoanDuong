@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hộp Câu Hỏi Tình Cảm</title>
+  <title>Hộp Câu Hỏi Tình Cảm 💖 + Snoopy</title>
   <style>
     body {
       margin: 0;
@@ -16,12 +16,15 @@
       justify-content: center;
       height: 100vh;
       color: #333;
+      overflow: hidden;
+      position: relative;
     }
 
     h1 {
       font-size: 2.5rem;
       margin-bottom: 1rem;
       color: #6a0572;
+      text-align: center;
     }
 
     #questionBox {
@@ -34,6 +37,7 @@
       text-align: center;
       font-size: 1.2rem;
       transition: all 0.3s ease;
+      z-index: 2;
     }
 
     #randomBtn {
@@ -46,11 +50,32 @@
       font-size: 1rem;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      z-index: 2;
     }
 
     #randomBtn:hover {
       background-color: #ff5194;
     }
+
+    /* Snoopy GIF positions */
+    .snoopy {
+      position: absolute;
+      width: 100px;
+      height: auto;
+      z-index: 1;
+      transition: transform 0.3s ease;
+    }
+
+    .snoopy:hover {
+      transform: scale(1.2);
+    }
+
+    .top-left { top: 10px; left: 10px; }
+    .top-right { top: 10px; right: 10px; }
+    .bottom-left { bottom: 10px; left: 10px; }
+    .bottom-right { bottom: 10px; right: 10px; }
+    .mid-left { top: 50%; left: 10px; transform: translateY(-50%); }
+    .mid-right { top: 50%; right: 10px; transform: translateY(-50%); }
   </style>
 </head>
 <body>
@@ -58,84 +83,40 @@
   <div id="questionBox">Nhấn nút bên dưới để nhận một câu hỏi ngọt ngào!</div>
   <button id="randomBtn">✨ Lấy Câu Hỏi</button>
 
+  <!-- Snoopy GIFs -->
+  <img class="snoopy top-left" src="https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif" alt="Snoopy">
+  <img class="snoopy top-right" src="https://media.giphy.com/media/l0MYB8Ory7Fqefo9a/giphy.gif" alt="Snoopy">
+  <img class="snoopy bottom-left" src="https://media.giphy.com/media/26gsgIkYJ7F2w/giphy.gif" alt="Snoopy">
+  <img class="snoopy bottom-right" src="https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif" alt="Snoopy">
+  <img class="snoopy mid-left" src="https://media.giphy.com/media/l4FGuhL4U2WyjdkaY/giphy.gif" alt="Snoopy">
+  <img class="snoopy mid-right" src="https://media.giphy.com/media/26FPCXdkvDbKBbgOI/giphy.gif" alt="Snoopy">
+
   <script>
     const questions = [
-      // Bạn sẽ thêm câu hỏi vào đây sau
       "Nếu được cùng nhau đi du lịch một nơi, bạn muốn đi đâu nhất?",
-      "Bạn có thích cái tên của mình không? Bạn có muốn mình có 1 cái tên khác không? Nếu có thì đó là tên gì?",
-      "Bạn thích được sinh ra ở quốc gia nào, tại sao?",
-      "Thỉnh thoảng bạn có tính trẻ con không? Bạn đã từng làm những hành động trẻ con gì?",
+      "Bạn thích mùa nào nhất và tại sao?",
+      "Điều gì khiến bạn cảm thấy an toàn khi ở bên người khác?",
+      "Khi buồn, bạn muốn người kia làm gì cho bạn?",
+      "Điều gì ở mình khiến bạn ấn tượng ngay lần đầu?",
+      "Bạn đã từng viết thư tay cho ai chưa?",
       "Ước mơ lớn nhất của bạn là gì?",
-      "Bạn có kế hoạch nghề nghiệp gì trong tương lai?",
-      "Bạn có tin vào tình yêu từ cái nhìn đầu tiên không?",
-      "Nếu có thể chọn một siêu năng lực, bạn muốn có gì?",
-      "Điều gì khiến bạn cảm thấy được yêu thương nhất?",
-      "Bạn có tin vào định mệnh trong tình yêu không?",
-      "Khi buồn, bạn thường muốn người kia làm gì cho bạn?",
-      "Mẫu người yêu lý tưởng trong bạn là như thế nào?",
-      "Điều gì ở mình khiến bạn ấn tượng đầu tiên?",
-      "Bạn đã từng viết thư tay cho ai chưa? Kể mình nghe chút được không?",
-      "Tuổi thơ bạn có một ký ức nào khiến bạn luôn mỉm cười mỗi khi nhớ lại không?",
-      "Nếu được chọn một nơi sống chung sau này, bạn thích thành phố, biển hay núi?",
-      "Bạn nghĩ tình yêu cần điều gì để bền lâu?",
-      "Nếu sau này có con, bạn muốn dạy con điều gì đầu tiên?",
-      "Bạn mong muốn chúng ta sẽ cùng nhau làm điều gì đầu tiên trong năm sau?",
-      "Điều nhỏ nhặt nào khiến bạn cảm thấy hạnh phúc mỗi ngày?",
-      "Bạn thích mùa nào nhất? Vì sao?",
-      "Điều gì khiến bạn cảm thấy an toàn khi ở cạnh ai đó?",
-      "Bạn thường làm gì khi cảm thấy lo lắng?",
-      "Nếu một ngày bạn cảm thấy trống rỗng, bạn muốn ai xuất hiện đầu tiên?",
-      "Điều gì khiến bạn thấy ai đó “thật sự đáng tin”?",
-      "Theo bạn, yêu là một cảm giác hay một sự lựa chọn?",
-      "Tình yêu với bạn là ngọn lửa cháy rực hay bếp than ấm áp?",
-      "Khi yêu, bạn thích nói ra hay thể hiện bằng hành động nhiều hơn?",
-      "Bạn đã từng giữ lại điều gì vì sợ làm người kia buồn chưa?",
-      "Giấc mơ ngây ngô nhất hồi nhỏ của bạn là gì?",
-      "Nếu có một điều ước ngay bây giờ, bạn sẽ ước điều gì cho chúng ta?",
-      "Có điều gì bạn chưa từng nói với ai nhưng luôn nghĩ đến?",
-      "Bạn có từng mong muốn thời gian quay lại một khoảnh khắc nào đó không?",
-      "Điều nhỏ nhặt nhưng bạn rất ghét là gì?",
-      "Bạn thường nghĩ đến ai đầu tiên khi thức dậy?",
-      "Nếu được đi đâu đó không cần lo chi phí, bạn sẽ chọn nơi nào?",
-      "Bạn có bao giờ nghĩ đến việc sống ở một thành phố khác không?",
-      "Nếu chỉ mang theo 3 thứ đến một nơi xa, bạn sẽ chọn gì?",
-      "Điều gì ở hiện tại bạn trân trọng nhất?",
-      "Món ăn nào khiến bạn nhớ đến nhà?",
-      "Có một bài hát nào luôn làm bạn thấy nhẹ lòng không?",
-      "Bạn thích được ai đó nắm tay vào lúc nào nhất?",
-      "Ánh mắt hay nụ cười – điều gì khiến bạn dễ rung động hơn?",
-      "Bạn có nghĩ rằng chúng ta sẽ còn ở cạnh nhau sau 5 năm nữa không?",
-      "Nếu mình giận bạn vô cớ, bạn sẽ làm gì?",
-      "Điều gì bạn muốn mình làm nhiều hơn cho bạn?",
-
-  "Bạn nghĩ ánh nhìn có thể thay lời muốn nói trong tình yêu không?",
-  "Nếu bạn có thể giữ một lời hứa suốt đời, đó sẽ là gì?",
-  "Bạn có nghĩ rằng tình yêu là một phép màu không?",
-  "Một nơi nào đó bạn muốn cùng người yêu đến trong tương lai?",
-  "Bạn có từng hy vọng tình yêu sẽ như trong phim không?",
-  "Một hành động lãng mạn nhỏ nào làm bạn rung động?",
-  "Nếu chỉ còn một buổi tối bên nhau, bạn muốn làm gì nhất?",
-  "Bạn có sợ mất đi người mình yêu không?",
-  "Bạn muốn xây dựng một góc nhỏ như thế nào để sống cùng người ấy?",
-  "Khi xa nhau, bạn thích nhắn tin hay gọi điện hơn?",
-  "Bạn muốn xây dựng một tổ ấm như thế nào trong tương lai?",
-  "Bạn muốn cùng người yêu kỷ niệm ngày đặc biệt bằng cách nào?",
-  "Bạn nghĩ người yêu nên biết tất cả hay giữ lại một phần bí mật riêng?",
-  "Nếu được chọn một món quà ý nghĩa cho người ấy, bạn sẽ chọn gì?",
-  "Bạn thấy điều gì tuyệt vời nhất khi yêu một người đúng lúc?",
+      "Bạn tin vào tình yêu sét đánh không?",
+      "Nếu có siêu năng lực, bạn muốn là gì?",
+      "Bạn mong chúng ta sẽ cùng làm gì vào năm tới?"
     ];
-  
-     let availableQuestions = [...questions]; // Tạo bản sao để rút dần
+
+    let availableQuestions = [...questions];
+
     const box = document.getElementById('questionBox');
     const btn = document.getElementById('randomBtn');
 
     btn.addEventListener('click', () => {
       if (availableQuestions.length === 0) {
-        availableQuestions = [...questions]; // Reset nếu hết
+        availableQuestions = [...questions]; // reset khi hết câu
       }
       const randomIndex = Math.floor(Math.random() * availableQuestions.length);
-      const selected = availableQuestions.splice(randomIndex, 1)[0];
-      box.textContent = selected;
+      const question = availableQuestions.splice(randomIndex, 1)[0];
+      box.textContent = question;
     });
   </script>
 </body>
