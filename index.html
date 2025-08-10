@@ -82,12 +82,12 @@
   }
 
   /* shuffle animation (small rocking) */
- @keyframes moveAround {
-  0%   { transform: translate(0, 0) rotate(0deg); }
-  25%  { transform: translate(200px, 50px) rotate(15deg); }
-  50%  { transform: translate(150px, 200px) rotate(-10deg); }
-  75%  { transform: translate(-100px, 150px) rotate(20deg); }
-  100% { transform: translate(0, 0) rotate(0deg); }
+  @keyframes rock {
+    0% { transform: translateY(0) rotate(0); }
+    25% { transform: translateY(-6px) rotate(3deg); }
+    50% { transform: translateY(0) rotate(-3deg); }
+    75% { transform: translateY(-4px) rotate(2deg); }
+    100% { transform: translateY(0) rotate(0); }
   }
   .shuffling { animation: rock 850ms ease-in-out 3; }
 
@@ -111,11 +111,15 @@
   }
 
   /* Snoopy */
-  .snoopy {
-  position: absolute;
-  width: 80px;
-  animation: moveAround 15s infinite ease-in-out alternate;
-}
+  .snoopy{
+    position:absolute;
+    width:100px;
+    height:auto;
+    z-index:2;
+    pointer-events:none;
+    will-change:transform;
+    filter:drop-shadow(0 6px 8px rgba(0,0,0,0.15));
+  }
 
   /* small screens */
   @media (max-width:640px){
@@ -424,7 +428,7 @@ const sprites = snoopys.map((el, i) => {
   // velocity small random
   const vx = (Math.random()*0.6 + 0.2) * (Math.random()<0.5 ? -1 : 1);
   const vy = (Math.random()*0.6 + 0.2) * (Math.random()<0.5 ? -1 : 1);
-  el.style.transform = `translate(${x}px, ${y}px)`;
+  el.style.transform = translate(${x}px, ${y}px);
   return {el,x,y,vx,vy};
 });
 
@@ -442,8 +446,13 @@ function animateSprites(t){
     // bounce on edges
     if (s.x < pad){ s.x = pad; s.vx *= -1; }
     if (s.y < pad){ s.y = pad; s.vy *= -1; }
-    if (s.x > width - pad - 100){ s.x = width - pad - 100; s.vx *= -1; }
-    if (s.y > height - pad - 100){ s.y = height - pad - 100; s.vy *= -1; }
+    let extraSpace = 50; // số px mở rộng ra ngoài
+if (s.x < -extraSpace || s.x > window.innerWidth - 80 + extraSpace) {
+  s.vx *= -1;
+}
+if (s.y < -extraSpace || s.y > window.innerHeight - 80 + extraSpace) {
+  s.vy *= -1;
+}
 
     // tiny random walk change
     if (Math.random() < 0.01) s.vx += (Math.random()-0.5)*0.4;
@@ -453,7 +462,7 @@ function animateSprites(t){
     s.vx = Math.max(-1.2, Math.min(1.2, s.vx));
     s.vy = Math.max(-1.2, Math.min(1.2, s.vy));
 
-    s.el.style.transform = `translate(${s.x}px, ${s.y}px)`;
+    s.el.style.transform = translate(${s.x}px, ${s.y}px);
   });
   requestAnimationFrame(animateSprites);
 }
@@ -470,5 +479,3 @@ window.addEventListener('resize', () => {
 
 </body>
 </html>
-
-
