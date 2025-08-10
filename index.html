@@ -1,208 +1,207 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Think about u 💖</title>
-  <style>
-    :root { --snoopy-size: 100px; }
-    body {
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(120deg, #fbc2eb, #a6c1ee);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      color: #333;
-      overflow: hidden;
-      position: relative;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Hộp Câu Hỏi Tình Cảm 💖 + Snoopy GIFs</title>
+<style>
+:root {
+  --snoopy-size: 100px;
+  --turquoise: #00bcd4;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(120deg, #fbc2eb, #a6c1ee);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+  color: #333;
+}
 
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 0.8rem;
-      color: #6a0572;
-      text-align: center;
-      z-index: 3;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.15);
-    }
+/* Tiêu đề */
+h1 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  color: #6a0572;
+  text-align: center;
+  z-index: 3;
+}
 
-    /* Container & Card */
-    #cardContainer {
-      perspective: 1200px;
-      margin: 20px;
-      z-index: 3;
-    }
-    .card {
-      width: 320px;
-      height: 200px;
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.8s ease;
-      cursor: pointer;
-    }
-    .card.flipped { transform: rotateY(180deg); }
-    .card.shuffling {
-      animation: shuffle 0.6s ease-in-out;
-    }
-    @keyframes shuffle {
-      0%, 100% { transform: translateX(0) rotate(0); }
-      25% { transform: translateX(-8px) rotate(-3deg); }
-      50% { transform: translateX(8px) rotate(3deg); }
-      75% { transform: translateX(-5px) rotate(-2deg); }
-    }
+/* Khung lá bài */
+.card-container {
+  perspective: 1200px;
+  z-index: 3;
+}
+.card {
+  width: 300px;
+  height: 420px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1s ease;
+  cursor: pointer;
+}
+.card.flip {
+  transform: rotateY(180deg);
+}
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+}
 
-    .card-front, .card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 15px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      padding: 1rem;
-      text-align: center;
-      transition: box-shadow 0.4s ease;
-    }
-    .card-front {
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      color: #fff;
-      font-weight: bold;
-    }
-    .card-back {
-      background: white;
-      color: #333;
-      transform: rotateY(180deg);
-    }
-    .glow {
-      box-shadow: 0 0 20px rgba(255, 118, 187, 0.8), 0 0 40px rgba(255, 118, 187, 0.6);
-    }
+/* Mặt sau lá bài */
+.card-back {
+  background: repeating-linear-gradient(45deg, var(--turquoise) 0, var(--turquoise) 10px, #b2ebf2 10px, #b2ebf2 20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
 
-    /* Nút */
-    #controls {
-      margin-top: 14px;
-      display:flex;
-      gap:12px;
-      justify-content:center;
-      z-index:3;
-    }
-    #randomBtn, #resetSeenBtn {
-      padding: 10px 16px;
-      border: none;
-      border-radius: 999px;
-      background: linear-gradient(90deg,#ff7eb9,#ff5194);
-      color: white;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 6px 14px rgba(255,82,148,0.18);
-    }
-    #resetSeenBtn { background: linear-gradient(90deg,#76b0ff,#6bd3ff); }
+/* Mặt trước lá bài */
+.card-front {
+  background: white;
+  border: 4px solid var(--turquoise);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  transform: rotateY(180deg);
+}
+.card-front h2 {
+  text-align: center;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: var(--turquoise);
+}
+.card-front p {
+  font-size: 1.1rem;
+  text-align: center;
+  line-height: 1.5;
+}
 
-    /* Snoopy */
-    .snoopy {
-      position: absolute;
-      width: var(--snoopy-size);
-      height: auto;
-      z-index: 1;
-      transition: transform 0.28s ease, opacity 0.28s ease;
-      opacity: 0.95;
-    }
-    .snoopy:hover { transform: scale(1.18); }
-    .top-left { top: 12px; left: 12px; }
-    .top-right { top: 12px; right: 12px; }
-    .bottom-left { bottom: 12px; left: 12px; }
-    .bottom-right { bottom: 12px; right: 12px; }
-    .mid-left { top: 50%; left: 8px; transform: translateY(-50%); }
-    .mid-right { top: 50%; right: 8px; transform: translateY(-50%); }
-    .hidden { display:none !important; }
+/* Nút */
+#controls {
+  margin-top: 14px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  z-index: 3;
+}
+#randomBtn, #resetSeenBtn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(90deg,#ff7eb9,#ff5194);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(255,82,148,0.18);
+}
+#resetSeenBtn { background: linear-gradient(90deg,#76b0ff,#6bd3ff); }
 
-    @media (max-width:600px){
-      :root { --snoopy-size: 72px; }
-      .card { width: 260px; height: 160px; }
-      h1 { font-size: 1.6rem; }
-    }
-  </style>
+/* Snoopy GIF */
+.snoopy {
+  position: absolute;
+  width: var(--snoopy-size);
+  height: auto;
+  z-index: 1;
+  opacity: 0.95;
+}
+.top-left { top: 12px; left: 12px; }
+.top-right { top: 12px; right: 12px; }
+.bottom-left { bottom: 12px; left: 12px; }
+.bottom-right { bottom: 12px; right: 12px; }
+.mid-left { top: 50%; left: 8px; transform: translateY(-50%); }
+.mid-right { top: 50%; right: 8px; transform: translateY(-50%); }
+
+@media (max-width:600px){
+  :root { --snoopy-size: 72px; }
+  h1 { font-size: 1.6rem; }
+  .card { width: 240px; height: 340px; }
+}
+</style>
 </head>
 <body>
-  <h1>Tarot Câu Hỏi Tình Cảm 💖</h1>
+<h1>💖</h1>
 
-  <div id="cardContainer">
-    <div class="card" id="questionCard">
-      <div class="card-front">✨ Nhấn để rút câu hỏi ✨</div>
-      <div class="card-back" id="questionBox">Câu hỏi sẽ hiện ở đây</div>
+<!-- Lá bài -->
+<div class="card-container">
+  <div class="card" id="questionCard">
+    <div class="card-face card-back">💖 Rút một lá 💖</div>
+    <div class="card-face card-front">
+      <h2>Lá Câu Hỏi</h2>
+      <p id="questionText">Câu hỏi sẽ hiện ở đây...</p>
     </div>
   </div>
+</div>
 
-  <div id="controls">
-    <button id="randomBtn">🔮 Rút Lá Bài</button>
-    <button id="resetSeenBtn" title="Reset danh sách đã hiển thị">🔁 Reset Bộ Bài</button>
-  </div>
+<!-- Nút -->
+<div id="controls">
+  <button id="randomBtn">✨ Lấy Câu Hỏi</button>
+  <button id="resetSeenBtn">🔁 Reset</button>
+</div>
 
-  <!-- Snoopy GIFs -->
-  <img class="snoopy top-left"    src="images/snoopy1.gif" alt="Snoopy TL">
-  <img class="snoopy top-right"   src="images/snoopy2.gif" alt="Snoopy TR">
-  <img class="snoopy bottom-left" src="images/snoopy3.gif" alt="Snoopy BL">
-  <img class="snoopy bottom-right"src="images/snoopy4.gif" alt="Snoopy BR">
-  <img class="snoopy mid-left"    src="images/snoopy5.gif" alt="Snoopy ML">
-  <img class="snoopy mid-right"   src="images/snoopy6.gif" alt="Snoopy MR">
+<!-- Snoopy GIF -->
+<img class="snoopy top-left"    src="images/snoopy 1.gif" alt="Snoopy TL">
+<img class="snoopy top-right"   src="images/snoopy 2.gif" alt="Snoopy TR">
+<img class="snoopy bottom-left" src="images/snoopy 3.gif" alt="Snoopy BL">
+<img class="snoopy bottom-right"src="images/snoopy 4.gif" alt="Snoopy BR">
+<img class="snoopy mid-left"    src="images/snoopy 5.gif" alt="Snoopy ML">
+<img class="snoopy mid-right"   src="images/snoopy 6.gif" alt="Snoopy MR">
 
-  <script>
-    const questions = [
-      "Nếu được cùng nhau đi du lịch một nơi, bạn muốn đi đâu nhất?",
-      "Bạn thích mùa nào nhất và tại sao?",
-      "Điều gì khiến bạn cảm thấy an toàn khi ở bên người khác?",
-      "Khi buồn, bạn muốn người kia làm gì cho bạn?",
-      "Điều nhỏ nhặt nào ở tôi khiến bạn cảm thấy hạnh phúc?",
-      "Nếu chúng ta có một ngày cuối tuần chỉ có hai người, bạn muốn làm gì?",
-      "Bạn nghĩ chúng ta sẽ như thế nào sau 5 năm nữa?",
-      "Có điều gì bạn chưa từng nói với tôi nhưng luôn muốn nói?",
-      "Khoảnh khắc nào khiến bạn cảm thấy thực sự yêu tôi?",
-      "Món ăn nào khiến bạn nghĩ đến tôi?"
-    ];
+<script>
+const questions = [
+  "Nếu được cùng nhau đi du lịch một nơi, bạn muốn đi đâu nhất?",
+  "Bạn thích mùa nào nhất và tại sao?",
+  "Điều gì khiến bạn cảm thấy an toàn khi ở bên người khác?",
+  "Khi buồn, bạn muốn người kia làm gì cho bạn?",
+  "Điều nhỏ nhặt nào ở tôi khiến bạn cảm thấy hạnh phúc?",
+  "Nếu chúng ta có một ngày cuối tuần chỉ có hai người, bạn muốn làm gì?",
+  "Bạn nghĩ chúng ta sẽ như thế nào sau 5 năm nữa?",
+  "Có điều gì bạn chưa từng nói với tôi nhưng luôn muốn nói?",
+  "Khoảnh khắc nào khiến bạn cảm thấy thực sự yêu tôi?",
+  "Món ăn nào khiến bạn nghĩ đến tôi?"
+];
 
-    let availableQuestions = [...questions];
-    const questionBox = document.getElementById('questionBox');
-    const randomBtn = document.getElementById('randomBtn');
-    const resetBtn = document.getElementById('resetSeenBtn');
-    const card = document.getElementById('questionCard');
+let availableQuestions = [...questions];
+const card = document.getElementById('questionCard');
+const questionText = document.getElementById('questionText');
+const btn = document.getElementById('randomBtn');
+const resetBtn = document.getElementById('resetSeenBtn');
 
-    randomBtn.addEventListener('click', () => {
-      // Hiệu ứng trộn bài
-      card.classList.add('shuffling');
-      setTimeout(() => {
-        card.classList.remove('shuffling');
-        // Chọn câu hỏi
-        if (availableQuestions.length === 0) {
-          availableQuestions = [...questions];
-        }
-        const idx = Math.floor(Math.random() * availableQuestions.length);
-        const q = availableQuestions.splice(idx, 1)[0];
+btn.addEventListener('click', () => {
+  if (availableQuestions.length === 0) {
+    availableQuestions = [...questions];
+  }
+  const idx = Math.floor(Math.random() * availableQuestions.length);
+  const q = availableQuestions.splice(idx, 1)[0];
+  questionText.textContent = q;
 
-        // Lật bài và glow
-        card.classList.add('flipped');
-        document.querySelector('.card-back').classList.add('glow');
-        setTimeout(() => {
-          questionBox.textContent = q;
-        }, 400);
+  // hiệu ứng flip
+  card.classList.remove('flip');
+  setTimeout(() => {
+    card.classList.add('flip');
+  }, 100);
+});
 
-        // Tắt glow sau vài giây
-        setTimeout(() => {
-          document.querySelector('.card-back').classList.remove('glow');
-        }, 2000);
-      }, 600);
-    });
-
-    resetBtn.addEventListener('click', () => {
-      availableQuestions = [...questions];
-      questionBox.textContent = "Câu hỏi sẽ hiện ở đây";
-      card.classList.remove('flipped');
-    });
-  </script>
+resetBtn.addEventListener('click', () => {
+  availableQuestions = [...questions];
+  questionText.textContent = "Câu hỏi sẽ hiện ở đây...";
+  card.classList.remove('flip');
+});
+</script>
 </body>
 </html>
